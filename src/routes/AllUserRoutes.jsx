@@ -17,12 +17,14 @@ export const UserRoutes = () => {
   const token = useSelector((state) => state?.token);
   const dispatch = useDispatch(authActions);
 
+  console.log(user);
+
   // check the user signouted or not is available
   let userAvailable = JSON.parse(localStorage.getItem("userAvilable"));
   console.log("user Available Or Not", userAvailable);
   const handleUserReq = async () => {
     const res = await axios
-      .get("http://localhost:3001/user", {
+      .get(`http://localhost:3001/user`, {
         withCredentials: true,
       })
       .catch((err) => {
@@ -45,7 +47,7 @@ export const UserRoutes = () => {
         localStorage.setItem("userAvilable", JSON.stringify(false));
       }
     });
-  }, [dispatch, userAvailable]);
+  }, [dispatch]);
 
   return (
     <>

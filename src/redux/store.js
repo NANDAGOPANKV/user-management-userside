@@ -7,6 +7,7 @@ const authSlice = createSlice({
     user: null,
     signouted: false,
     token: undefined,
+    isAdminSignedIn: false,
   },
   reducers: {
     signin(state) {
@@ -26,6 +27,12 @@ const authSlice = createSlice({
     },
     notAvailable(state) {
       state.signouted = true;
+    },
+    adminSignIn(state) {
+      state.isAdminSignedIn = true;
+    },
+    adminSignOut(state) {
+      state.isAdminSignedIn = false;
     },
   },
 });
