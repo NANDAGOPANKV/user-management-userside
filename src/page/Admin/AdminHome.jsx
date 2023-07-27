@@ -11,18 +11,37 @@ export const AdminHome = () => {
       .get("http://localhost:3001/admin")
       .then((res) => {
         setUsers(res?.data?.users);
-        console.log(res);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [setUsers]);
 
-  console.log(users);
+  const handleSearch = (event) => {
+    let searchTerm = event.target.value.toLowerCase();
 
+    if (searchTerm === "") {
+      setUsers(users);
+    } else {
+      let updatedUser = users.filter((items) =>
+        items?.name?.toLowerCase().includes(searchTerm)
+      );
+      setUsers(updatedUser);
+    }
+  };
   return (
     <>
       <AdminHeader />
+      {/* search */}
+      <div className="cursor-default border-2">
+        <input
+          className="px-7 py-2 rounded-full text-black border-none"
+          onChange={handleSearch}
+          type="text"
+          placeholder="Enter book name"
+        />
+      </div>
+      {/* search */}
       <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3">
         {/* User/Cards */}
         {users?.map((data, key) => {

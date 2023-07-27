@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { BiEdit } from "react-icons/bi";
+import { AiOutlineDelete } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export const Users = (props) => {
   const navigate = useNavigate();
@@ -8,7 +10,21 @@ export const Users = (props) => {
     navigate(`edit/${props?._id}`);
   };
 
-  console.log(props);
+  const handleDelete = async () => {
+    await axios
+      .delete(`http://localhost:3001/admin/${props?._id}`)
+      .then((res) => {
+        console.log(res);
+        navigate("/admin/");
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        console.log("Axios Working");
+      });
+  };
+
   return (
     <>
       <div className="m-3">
@@ -22,6 +38,11 @@ export const Users = (props) => {
             <div className="absolute left-3 top-2 text-white">
               <BiEdit
                 onClick={handleUpdate}
+                size={30}
+                className="hover:text-black"
+              />
+              <AiOutlineDelete
+                onClick={handleDelete}
                 size={30}
                 className="hover:text-black"
               />
